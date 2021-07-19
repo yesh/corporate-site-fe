@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0a7ef129-cce9-4813-8237-aa291bd01aff/deploy-status)](https://app.netlify.com/sites/modest-mclean-620693/deploys)
+
 # pagoPa corporate website - Frontend
 
 ### Built with Gatsby
