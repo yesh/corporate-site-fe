@@ -87,11 +87,11 @@ module.exports = {
     },
 
     // temporary password
-    {
-      resolve: `@mkitio/gatsby-theme-password-protect`,
-      options: {
-        password: process.env.FRONTEND_PASSWORD,
-      },
-    },
+    // {
+    //   resolve: `@mkitio/gatsby-theme-password-protect`,
+    //   options: {
+    //     password: process.env.FRONTEND_PASSWORD,
+    //   },
+    // },
   ],
 }
