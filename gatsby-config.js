@@ -25,9 +25,14 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress`,
       options: {
-        url: `${process.env.BACKEND_BASE_URL}/wp/graphql`,
+        url: `${process.env.BACKEND_BASE_URL}/wp/index.php?graphql`,
         html: {
           createStaticFiles: true,
+        },
+        schema: {
+          perPage: 20, // default 100
+          requestConcurrency: 5, // default 15
+          previewRequestConcurrency: 2, // default 5
         }
       },
     },
@@ -72,7 +77,11 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-transformer-inline-svg`,
-    `gatsby-plugin-sitemap`,
+
+    {
+      resolve: `gatsby-plugin-sitemap`
+    },
+
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
