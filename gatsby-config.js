@@ -6,8 +6,8 @@ const languages = require('./src/data/languages')
 
 module.exports = {
   siteMetadata: {
-    title: `pagopa`,
-    description: ``,
+    title: `PagoPA`,
+    description: `PagoPA S.p.A. è una società pubblica ad alto livello specialistico, che ha la mission di diffondere i servizi pubblici digitali attraverso lo sviluppo di progetti innovativi e la gestione di infrastrutture tecnologiche strategiche per accompagnare la modernizzazione della Pubblica Amministrazione e del Paese.`,
     author: ``,
     siteUrl: process.env.FRONTEND_BASE_URL,
     cmsUrl: process.env.BACKEND_BASE_URL,
@@ -15,13 +15,6 @@ module.exports = {
     defaultLanguage: languages.default,
   },
   plugins: [
-    {
-      resolve: `gatsby-plugin-i18n`,
-      options: {
-        langKeyDefault: languages.default,
-        useLangKeyLayout: false,
-      },
-    },
     {
       resolve: `gatsby-source-wordpress`,
       options: {
@@ -47,7 +40,7 @@ module.exports = {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
         host: process.env.FRONTEND_BASE_URL,
-        sitemap: `${process.env.FRONTEND_BASE_URL}/sitemap.xml`,
+        sitemap: `${process.env.FRONTEND_BASE_URL}/sitemap/sitemap-index.xml`,
         policy: [{ userAgent: '*', disallow: '/' }],
       },
     },
@@ -74,7 +67,6 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-transformer-inline-svg`,
-
     {
       resolve: `gatsby-plugin-sitemap`
     },
@@ -92,12 +84,5 @@ module.exports = {
       },
     },
 
-    // temporary password
-    {
-      resolve: `@mkitio/gatsby-theme-password-protect`,
-      options: {
-        password: process.env.FRONTEND_PASSWORD,
-      },
-    },
   ],
 }
