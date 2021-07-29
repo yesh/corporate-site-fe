@@ -19,11 +19,11 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         url: `${process.env.BACKEND_BASE_URL}/wp/index.php?graphql`,
-        // schema: {
-        //   perPage: 20, // default 100
-        //   requestConcurrency: 5, // default 15
-        //   previewRequestConcurrency: 2, // default 5
-        // }
+        schema: {
+          perPage: 20, // default 100
+          requestConcurrency: 2, // default 15
+          previewRequestConcurrency: 2, // default 5
+        }
       },
     },
     {
@@ -41,7 +41,16 @@ module.exports = {
       options: {
         host: process.env.FRONTEND_BASE_URL,
         sitemap: `${process.env.FRONTEND_BASE_URL}/sitemap/sitemap-index.xml`,
-        policy: [{ userAgent: '*', disallow: '/' }],
+        policy: [
+          { userAgent: '*', disallow: '/' },
+          { userAgent: 'SemrushBot-SA', allow: '/' }
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: process.env.FRONTEND_BASE_URL,
       },
     },
     `gatsby-plugin-react-helmet`,
