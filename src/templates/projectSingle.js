@@ -8,18 +8,18 @@ import NewsletterBanner from '../components/NewsletterBanner/NewsletterBanner'
 
 import SeoHelmet from '../components/SeoHelmet'
 
-const Page = ({ location, data }) => {
+const ProjectPage = ({ location, data }) => {
   const {
       title,
+      slug,
       locale,
       flexibleContent,
       nodeType,
-      slug,
-      link,
       featuredImage,
       seo,
+      link,
       postConfig: { bannerNewsletter },
-    } = data.wpPage,
+    } = data.wpProject,
     blocks = flexibleContent.body.blocks
 
   const currentLocale = locale.id,
@@ -44,11 +44,11 @@ const Page = ({ location, data }) => {
     </Layout>
   )
 }
-export default Page
+export default ProjectPage
 
-export const pageQuery = graphql`
-  query page($id: String!) {
-    wpPage(id: { eq: $id }) {
+export const projectQuery = graphql`
+  query project($id: String!) {
+    wpProject(id: { eq: $id }) {
       nodeType
       locale {
         id
@@ -65,8 +65,6 @@ export const pageQuery = graphql`
         node {
           altText
           localFile {
-            extension
-            publicURL
             childImageSharp {
               fixed(fit: COVER, quality: 90, width: 1200, height: 627) {
                 src
@@ -98,7 +96,7 @@ export const pageQuery = graphql`
       flexibleContent {
         body {
           blocks {
-            ... on WpPage_Flexiblecontent_Body_Blocks_HeroSlider {
+            ... on WpProject_Flexiblecontent_Body_Blocks_HeroSlider {
               fieldGroupName
               items {
                 content {
@@ -128,7 +126,7 @@ export const pageQuery = graphql`
                 }
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockText {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockText {
               fieldGroupName
 
               blockOptions {
@@ -154,7 +152,7 @@ export const pageQuery = graphql`
                 title
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockVisualText {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockVisualText {
               fieldGroupName
               reverse
               blockOptions {
@@ -192,7 +190,7 @@ export const pageQuery = graphql`
                 }
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_UsefulLinks {
+            ... on WpProject_Flexiblecontent_Body_Blocks_UsefulLinks {
               fieldGroupName
               blockOptions {
                 backgroundGraphics {
@@ -219,7 +217,7 @@ export const pageQuery = graphql`
                 }
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_ProjectCarousel {
+            ... on WpProject_Flexiblecontent_Body_Blocks_ProjectCarousel {
               fieldGroupName
               title
               items {
@@ -257,7 +255,7 @@ export const pageQuery = graphql`
                 }
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockVisual {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockVisual {
               blockOptions {
                 backgroundGraphics {
                   fieldGroupName
@@ -282,8 +280,7 @@ export const pageQuery = graphql`
                 }
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockIntro {
-              fieldGroupName
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockIntro {
               blockOptions {
                 backgroundGraphics {
                   fieldGroupName
@@ -294,6 +291,7 @@ export const pageQuery = graphql`
                 blockPosition
                 blockWidth
               }
+              fieldGroupName
               eyelet
               title
               text
@@ -308,9 +306,8 @@ export const pageQuery = graphql`
                   }
                 }
               }
-              introMenu
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockList {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockList {
               fieldGroupName
               blockOptions {
                 backgroundGraphics {
@@ -339,7 +336,7 @@ export const pageQuery = graphql`
                 }
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockBannerCta {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockBannerCta {
               fieldGroupName
               title
               bannerCtaLink {
@@ -348,7 +345,7 @@ export const pageQuery = graphql`
                 url
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockCtaGrid {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockCtaGrid {
               fieldGroupName
               blockOptions {
                 backgroundGraphics {
@@ -370,7 +367,7 @@ export const pageQuery = graphql`
                 }
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockContactsList {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockContactsList {
               fieldGroupName
               blockOptions {
                 backgroundGraphics {
@@ -389,7 +386,7 @@ export const pageQuery = graphql`
                 title
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockMapBox {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockMapBox {
               fieldGroupName
 
               image {
@@ -407,7 +404,7 @@ export const pageQuery = graphql`
                 title
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockLogoLinks {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockLogoLinks {
               fieldGroupName
               title
               items {
@@ -424,7 +421,7 @@ export const pageQuery = graphql`
                 logoLink
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockJobsListing {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockJobsListing {
               fieldGroupName
               eyelet
               title
@@ -451,7 +448,7 @@ export const pageQuery = graphql`
                 }
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockPressRelease {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockPressRelease {
               fieldGroupName
               title
               link {
@@ -460,7 +457,7 @@ export const pageQuery = graphql`
                 url
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockAttachmentsGrid {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockAttachmentsGrid {
               title
               entries {
                 icon {
@@ -492,7 +489,7 @@ export const pageQuery = graphql`
                 }
               }
             }
-            ... on WpPage_Flexiblecontent_Body_Blocks_BlockAccordion {
+            ... on WpProject_Flexiblecontent_Body_Blocks_BlockAccordion {
               fieldGroupName
               title
               blockOptions {

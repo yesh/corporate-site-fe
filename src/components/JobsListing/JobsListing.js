@@ -16,7 +16,12 @@ import { LocaleContext } from '../../contexts/LocaleContext.js'
 import { useWpOptionsPage } from '../../hooks/useWpOptionsPage'
 import { useJobPositions } from '../../hooks/useJobPositions.js'
 
+import Cta from '../Cta/Cta.js'
+
 import './JobsListing.sass'
+
+
+const dateFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' }
 
 const JobsList = () => {
   const { translations } = useWpOptionsPage()
@@ -28,7 +33,7 @@ const JobsList = () => {
   const currentLocaleJobs = jobs.filter(j => j.node.locale.id === locale)
 
   const today = Date.now()
-  const activeListing = currentLocaleJobs.filter(j => Date.parse(j.node.jobPositionFields.closeDate) >= today)
+  const activeListing = currentLocaleJobs.filter(j => !j.node.jobPositionFields.closeDate || Date.parse(j.node.jobPositionFields.closeDate) >= today)
   const pastListing = currentLocaleJobs.filter(j => Date.parse(j.node.jobPositionFields.closeDate) < today)
 
   return (
@@ -42,8 +47,8 @@ const JobsList = () => {
             title,
           } = job.node
 
-          const startDate = new Date(openDate).toLocaleDateString(locale.id)
-          const endDate = new Date(closeDate).toLocaleDateString(locale.id)
+          const startDate = openDate ? new Date(openDate).toLocaleDateString(locale.id, dateFormatOptions) : null
+          const endDate = closeDate ? new Date(closeDate).toLocaleDateString(locale.id, dateFormatOptions) : null
 
           const jobDir =
             locale.id === 'it'
@@ -60,7 +65,8 @@ const JobsList = () => {
                   {isNew && <span>NEW</span>}
                 </h4>
                 <p className="job-entry__timeframe">
-                  Data di apertura: {startDate} - Data di chiusura: {endDate}
+                  {startDate && `Data di apertura: ${startDate}`}
+                  {endDate && ` - Data di chiusura: ${endDate}`}
                 </p>
               </article>
             </Link>
@@ -87,8 +93,8 @@ const JobsList = () => {
                     title,
                   } = job.node
 
-                  const startDate = new Date(openDate).toLocaleDateString(locale.id)
-                  const endDate = new Date(closeDate).toLocaleDateString(locale.id)
+                  const startDate = new Date(openDate).toLocaleDateString(locale.id, dateFormatOptions)
+                  const endDate = new Date(closeDate).toLocaleDateString(locale.id, dateFormatOptions)
 
                   const jobDir =
                     locale.id === 'it'
@@ -119,8 +125,42 @@ const JobsList = () => {
   )
 }
 
+const LinksAttachments = ({ data }) => {
+
+  const { title, links } = data
+
+  return (
+    <div className="jobs-listing__links-attachment">
+      {title && <h4>{title}</h4>}
+      <ul>
+        {links && links.map(({ usefulLink, usefulAttachment }, key) => {
+          const linkObj = {
+            title: usefulLink ? usefulLink.title : usefulAttachment ? usefulAttachment.title : false,
+            url: usefulLink ? usefulLink.url : usefulAttachment ? usefulAttachment.localFile.publicURL : false,
+            blank: usefulLink ? usefulLink.target : usefulAttachment ? true : false
+          }
+
+          return (
+            <li key={key}>
+              {linkObj.url && <Cta
+                label={linkObj.title}
+                url={linkObj.url}
+                blank={linkObj.blank}
+                variant="link"
+              />}
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+
+}
+
 const JobsListing = ({ data }) => {
-  const { eyelet, title, text, commonFeatures, privacyDisclaimer } = data
+  const { eyelet, title, text, commonFeatures, privacyDisclaimer, linkAttachments } = data
+
+  const { jobsTitle, jobsLinks } = linkAttachments
 
   const hasCommonFeatures = commonFeatures.length
 
@@ -158,7 +198,12 @@ const JobsListing = ({ data }) => {
                 <p>{parse(privacyDisclaimer)}</p>
               </div>
             )}
-
+            
+            {jobsLinks && <LinksAttachments data={{
+              title: jobsTitle,
+              links: jobsLinks
+            }} />}
+            
             <JobsList />
           </div>
         </div>

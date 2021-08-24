@@ -41,10 +41,9 @@ module.exports = {
       options: {
         host: process.env.FRONTEND_BASE_URL,
         sitemap: `${process.env.FRONTEND_BASE_URL}/sitemap/sitemap-index.xml`,
-        policy: [
-          { userAgent: '*', disallow: '/' },
-          { userAgent: 'SemrushBot-SA', allow: '/' },
-        ],
+        policy: process.env.FRONTEND_BASE_URL === 'https://www.pagopa.it'
+                  ? [{ userAgent: '*', allow: '/' }]
+                  : [{ userAgent: '*', disallow: '/' }]
       },
     },
     {
@@ -53,20 +52,6 @@ module.exports = {
         siteUrl: process.env.FRONTEND_BASE_URL,
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-google-gtag`,
-    //   options: {
-    //     trackingIds: ['G-XNW0W43V93'],
-    //     gtagConfig: {
-    //       anonymize_ip: true,
-    //       cookie_expires: 60 * 60 * 24 * 28 * 6,
-    //     },
-    //     pluginConfig: {
-    //       head: false,
-    //       respectDNT: true,
-    //     },
-    //   },
-    // },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -93,7 +78,6 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
     },
-
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
