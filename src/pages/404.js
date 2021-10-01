@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 
 import { StaticImage } from "gatsby-plugin-image"
 
@@ -7,7 +7,7 @@ import { LocaleContext } from '../contexts/LocaleContext.js'
 import Layout from '../partials/Layout'
 import SeoHelmet from '../components/SeoHelmet'
 
-const NotFoundPage = ({ location, data }) => {
+const NotFoundPage = ({ location }) => {
   const locale = useContext(LocaleContext)
 
   return (
@@ -25,7 +25,7 @@ const NotFoundPage = ({ location, data }) => {
                 marginTop: '8rem',
                 marginBottom: '8rem'
               }} >
-                <StaticImage src="../images/404.png" alt="image" width={600} />
+                <StaticImage src="../images/404_a.png" alt="image" width={600} />
               </div>
                 
             </div>
